@@ -1,0 +1,12 @@
+package cz.tomanjir;
+
+public class MainApp {
+
+    public static void main(Object... args) {
+        System.out.println("Hello World IntelliJ!!!");
+
+        int num = 1;
+        num += 1;
+        System.out.println(num);
+    }
+}
