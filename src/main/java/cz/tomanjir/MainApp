@@ -1,5 +1,7 @@
 package cz.tomanjir;
 
+import cz.tomanjir.model.Person;
+
 public class MainApp {
 
     public static void main(Object... args) {
@@ -8,5 +10,11 @@ public class MainApp {
         int num = 1;
         num += 1;
         System.out.println(num);
+
+        Person jirka = new Person(1L, "Jirka");
+        System.out.println(jirka);
+
+        Person mirka = new Person(2L, "Mirka");
+        System.out.println(mirka);
     }
 }
