@@ -5,9 +5,10 @@ import com.google.common.base.MoreObjects;
 public class Person {
 
     private final long id;
+
     private String name;
 
-    public Person(long id) {
+    Person(long id) {
         this(id, null);
     }
 
@@ -16,15 +17,15 @@ public class Person {
         this.name = name;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 

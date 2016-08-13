@@ -4,27 +4,28 @@ import com.google.common.base.MoreObjects;
 
 public class Animal {
 
-    private long id;
+    private final long id;
+
     private String name;
+
+    Animal(long id) {
+        this(id, null);
+    }
 
     public Animal(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
