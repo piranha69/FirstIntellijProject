@@ -13,17 +13,23 @@ public class MainApp {
         LOG.info("MainApp started.");
 
         init();
+        close();
 
         LOG.info("MainApp finished.");
     }
 
     private static void init() {
-        LOG.info("MainApp Initializing..");
+        LOG.info("MainApp initializing..");
         AnimalRentalService.getInstance().registerAnimal(new Animal(1L, "dog1"));
         AnimalRentalService.getInstance().registerAnimal(new Animal(2L, "dog2"));
         AnimalRentalService.getInstance().registerAnimal(new Animal(3L, "dog3"));
         AnimalRentalService.getInstance().registerAnimal(new Animal(4L, "dog4"));
-        AnimalRentalService.getInstance().registerAnimal(new Animal(4L, "dog4"));
-        LOG.info("MainApp Initialized.");
+        LOG.info("MainApp initialized.");
+    }
+
+    private static void close() {
+        LOG.info("MainApp closing..");
+        AnimalRentalService.getInstance().close();
+        LOG.info("MainApp closed.");
     }
 }
