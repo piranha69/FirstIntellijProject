@@ -1,9 +1,15 @@
 package cz.tomanjir.model;
 
+import com.google.common.base.MoreObjects;
+
 public class Person {
 
-    private long id;
+    private final long id;
     private String name;
+
+    public Person(long id) {
+        this(id, null);
+    }
 
     public Person(long id, String name) {
         this.id = id;
@@ -12,10 +18,6 @@ public class Person {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -44,9 +46,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
+                .toString();
     }
 }

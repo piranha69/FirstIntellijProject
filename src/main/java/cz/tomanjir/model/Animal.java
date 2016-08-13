@@ -1,5 +1,7 @@
 package cz.tomanjir.model;
 
+import com.google.common.base.MoreObjects;
+
 public class Animal {
 
     private long id;
@@ -40,5 +42,13 @@ public class Animal {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
+                .toString();
     }
 }
