@@ -8,7 +8,7 @@ public class Person {
 
     private String name;
 
-    Person(long id) {
+    public Person(long id) {
         this(id, null);
     }
 
@@ -17,15 +17,15 @@ public class Person {
         this.name = name;
     }
 
-    long getId() {
+    public long getId() {
         return id;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
