@@ -1,7 +1,6 @@
 package cz.tomanjir;
 
 import cz.tomanjir.model.Animal;
-import cz.tomanjir.model.Person;
 import cz.tomanjir.service.AnimalRentalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
