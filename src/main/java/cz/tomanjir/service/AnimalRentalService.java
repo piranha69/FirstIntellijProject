@@ -15,7 +15,7 @@ public class AnimalRentalService {
 
     private static final AnimalRentalService INSTANCE = new AnimalRentalService();
 
-    private AnimalRentalService() {}
+    public AnimalRentalService() {}
 
     public static AnimalRentalService getInstance() {
         return INSTANCE;
@@ -56,9 +56,8 @@ public class AnimalRentalService {
     }
 
     public void unregisterAllAnimals() {
-        LOG.info("Unregistering all animals..");
+        LOG.info("Closing..");
         availableAnimals.clear();
-        LOG.info("Unregistered all animals.");
     }
 
     public int getNumberOfRegisteredAnimals() {
