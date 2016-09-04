@@ -1,7 +1,7 @@
 package cz.tomanjir;
 
 import cz.tomanjir.model.Animal;
-import cz.tomanjir.service.AnimalRentalService;
+import cz.tomanjir.service.AnimalRentalServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,16 +20,16 @@ public class MainApp {
 
     private static void init() {
         LOG.info("MainApp initializing..");
-        AnimalRentalService.getInstance().registerAnimal(new Animal(1L, "dog1"));
-        AnimalRentalService.getInstance().registerAnimal(new Animal(2L, "dog2"));
-        AnimalRentalService.getInstance().registerAnimal(new Animal(3L, "dog3"));
-        AnimalRentalService.getInstance().registerAnimal(new Animal(4L, "dog4"));
+        AnimalRentalServiceImpl.getInstance().registerAnimal(new Animal(1L, "dog1"));
+        AnimalRentalServiceImpl.getInstance().registerAnimal(new Animal(2L, "dog2"));
+        AnimalRentalServiceImpl.getInstance().registerAnimal(new Animal(3L, "dog3"));
+        AnimalRentalServiceImpl.getInstance().registerAnimal(new Animal(4L, "dog4"));
         LOG.info("MainApp initialized.");
     }
 
     private static void close() {
         LOG.info("MainApp closing..");
-        AnimalRentalService.getInstance().close();
+        AnimalRentalServiceImpl.getInstance().close();
         LOG.info("MainApp closed.");
     }
 }

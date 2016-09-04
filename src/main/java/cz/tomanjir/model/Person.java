@@ -2,6 +2,8 @@ package cz.tomanjir.model;
 
 import com.google.common.base.MoreObjects;
 
+import java.util.Objects;
+
 public class Person {
 
     private final long id;
@@ -33,16 +35,13 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Person person = (Person) o;
-
         return id == person.id;
-
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return Objects.hash(id);
     }
 
     @Override
