@@ -1,8 +1,11 @@
 package cz.tomanjir.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AnimalTest {
 
@@ -23,8 +26,8 @@ public class AnimalTest {
 
         Animal animal3a = new Animal(3L, "animal3");
         Animal animal3b = new Animal(3L, "animal3");
-        assertFalse(animal3a==animal3b);
-        assertTrue(animal3a.hashCode()==animal3b.hashCode());
+        assertFalse(animal3a == animal3b);
+        assertTrue(animal3a.hashCode() == animal3b.hashCode());
         assertTrue(animal3a.equals(animal3b));
     }
 }
