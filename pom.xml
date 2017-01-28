@@ -72,7 +72,7 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>*</include>
+                    <include>**/*</include>
                 </includes>
             </resource>
         </resources>
@@ -81,7 +81,7 @@
             <testResource>
                 <directory>src/test/resources</directory>
                 <includes>
-                    <include>*</include>
+                    <include>**/*</include>
                 </includes>
             </testResource>
         </testResources>
