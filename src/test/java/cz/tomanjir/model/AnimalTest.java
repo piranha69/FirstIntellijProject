@@ -14,7 +14,7 @@ public class AnimalTest {
         Animal animal1 = new Animal(1L, "animal1");
         assertEquals(1L, animal1.getId());
         assertEquals("animal1", animal1.getName());
-        assertEquals("Animal{id=2, name=animal1}", new Animal(1L, "animal1").toString());
+        assertEquals("Animal{id=1, name=animal1}", new Animal(1L, "animal1").toString());
 
         animal1.setName("animal2");
         assertEquals("animal2", animal1.getName());
