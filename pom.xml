@@ -91,6 +91,18 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -111,6 +123,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <systemPropertyVariables>
+                        <log4j.configurationFile>config/logging/log4j2-test.xml</log4j.configurationFile>
                         <log4j.configurationFile>config/logging/log4j2-test.xml</log4j.configurationFile>
                     </systemPropertyVariables>
                 </configuration>

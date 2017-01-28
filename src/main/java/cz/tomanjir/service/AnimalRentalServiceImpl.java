@@ -11,26 +11,25 @@ public class AnimalRentalServiceImpl implements AnimalRentalService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AnimalRentalServiceImpl.class);
 
-    private final Set<Animal> availableAnimals = new HashSet<>();
+    private final Set<Animal> availableAnimals;
 
-    private static final AnimalRentalServiceImpl INSTANCE = new AnimalRentalServiceImpl();
-
-    public AnimalRentalServiceImpl() {
-    }
-
-    public static AnimalRentalServiceImpl getInstance() {
-        return INSTANCE;
+    AnimalRentalServiceImpl() {
+        this.availableAnimals = new HashSet<>();
     }
 
     @Override
-    public void init() {
+    public void initService() {
         LOG.info("Initializing..");
-        //Implement if needed
+        //TODO: Implement dynamically if needed
+        registerAnimal(new Animal(1L, "dog1"));
+        registerAnimal(new Animal(2L, "dog2"));
+        registerAnimal(new Animal(3L, "dog3"));
+        registerAnimal(new Animal(4L, "dog4"));
         LOG.info("Initialized.");
     }
 
     @Override
-    public void close() {
+    public void destroyService() {
         LOG.info("Closing..");
         unregisterAllAnimals();
         LOG.info("Closed.");

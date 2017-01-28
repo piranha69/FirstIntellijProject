@@ -2,12 +2,12 @@ package cz.tomanjir.service;
 
 import cz.tomanjir.model.Animal;
 
-public interface AnimalRentalService extends Service {
-    public abstract boolean registerAnimal(Animal animal);
+interface AnimalRentalService extends Service {
+    boolean registerAnimal(Animal animal);
 
-    public abstract boolean unregisterAnimal(Animal animal);
+    boolean unregisterAnimal(Animal animal);
 
-    public abstract void unregisterAllAnimals();
+    void unregisterAllAnimals();
 
-    public abstract int getNumberOfRegisteredAnimals();
+    int getNumberOfRegisteredAnimals();
 }
