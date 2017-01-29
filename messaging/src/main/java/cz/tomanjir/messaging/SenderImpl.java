@@ -16,15 +16,15 @@ public class SenderImpl implements Sender, Service {
 
     private static final Logger LOG = LoggerFactory.getLogger(SenderImpl.class);
 
-    private final String host;
+    private final ConnectionFactory connectionFactory;
     private final String queueName;
 
     private Connection connection;
     private Channel channel;
 
     @Inject
-    public SenderImpl(String host, String queueName) {
-        this.host = host;
+    public SenderImpl(ConnectionFactory connectionFactory, String queueName) {
+        this.connectionFactory = connectionFactory;
         this.queueName = queueName;
     }
 
@@ -32,11 +32,8 @@ public class SenderImpl implements Sender, Service {
     public void initService() {
         LOG.info("Initializing service...");
 
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(host);
-
         try {
-            connection = factory.newConnection();
+            connection = connectionFactory.newConnection();
         } catch (IOException | TimeoutException e) {
             LOG.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -56,6 +53,7 @@ public class SenderImpl implements Sender, Service {
     public void send(Message message) {
         try {
             channel.basicPublish(StringUtils.EMPTY, queueName, null, message.getBytes());
+            LOG.info("Sent {}.", message.toString());
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         }

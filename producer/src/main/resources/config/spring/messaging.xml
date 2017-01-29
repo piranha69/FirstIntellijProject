@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-init-method="initService" default-destroy-method="destroyService">
+
+    <bean id="connectionFactory" class="com.rabbitmq.client.ConnectionFactory">
+        <property name="host" value="localhost"/>
+        <property name="virtualHost" value="/home-system"/>
+        <property name="username" value="hs"/>
+        <property name="password" value="hs"/>
+    </bean>
+
+    <bean id="testSender" class="cz.tomanjir.messaging.SenderImpl">
+        <constructor-arg index="0" ref="connectionFactory"/>
+        <constructor-arg index="1" value="hs-test"/>
+    </bean>
+</beans>
