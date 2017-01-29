@@ -10,8 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>messages</module>
         <module>common</module>
+        <module>messaging</module>
+        <module>messages</module>
         <module>producer</module>
         <module>consumer</module>
     </modules>
@@ -74,6 +75,12 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j2.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
         </dependency>
 
         <dependency>

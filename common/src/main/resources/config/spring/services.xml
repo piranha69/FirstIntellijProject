@@ -3,6 +3,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
-    <bean id="animalRentalService" class="cz.tomanjir.service.AnimalRentalServiceImpl"/>
+    <bean id="animalRentalService" class="cz.tomanjir.common.service.AnimalRentalServiceImpl"/>
 
 </beans>

@@ -1,6 +1,6 @@
-package cz.tomanjir.service;
+package cz.tomanjir.common.service;
 
-import cz.tomanjir.model.Animal;
+import cz.tomanjir.common.model.Animal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

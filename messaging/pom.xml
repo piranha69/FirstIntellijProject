@@ -10,14 +10,20 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>producer</artifactId>
+    <artifactId>messaging</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>cz.tomanjir</groupId>
-            <artifactId>messaging</artifactId>
+            <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>3.6.6</version>
         </dependency>
     </dependencies>
 </project>

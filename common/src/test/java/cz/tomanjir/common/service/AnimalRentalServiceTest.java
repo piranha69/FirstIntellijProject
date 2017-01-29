@@ -1,4 +1,4 @@
-package cz.tomanjir.service;
+package cz.tomanjir.common.service;
 
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;

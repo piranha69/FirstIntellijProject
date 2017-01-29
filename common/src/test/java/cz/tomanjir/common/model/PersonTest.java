@@ -1,4 +1,4 @@
-package cz.tomanjir.model;
+package cz.tomanjir.common.model;
 
 import org.junit.jupiter.api.Test;
 

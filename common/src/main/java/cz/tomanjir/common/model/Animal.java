@@ -1,20 +1,20 @@
-package cz.tomanjir.model;
+package cz.tomanjir.common.model;
 
 import com.google.common.base.MoreObjects;
 
 import java.util.Objects;
 
-public class Person {
+public class Animal {
 
     private final long id;
 
     private String name;
 
-    public Person(long id) {
+    public Animal(long id) {
         this(id, null);
     }
 
-    public Person(long id, String name) {
+    public Animal(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -35,8 +35,8 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return id == person.id;
+        Animal animal = (Animal) o;
+        return id == animal.id;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cz.tomanjir;
+package cz.tomanjir.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

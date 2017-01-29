@@ -12,4 +12,12 @@
 
     <artifactId>consumer</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>cz.tomanjir</groupId>
+            <artifactId>messaging</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
