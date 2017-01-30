@@ -1,10 +1,10 @@
-package cz.tomanjir.messaging;
+package cz.tomanjir.messaging.rabbitmq;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import cz.tomanjir.common.service.Service;
-import org.apache.commons.lang3.StringUtils;
+import cz.tomanjir.messaging.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,25 +12,28 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class SenderImpl implements Sender, Service {
+public class RabbitMqConnector implements Connector, Service {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SenderImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RabbitMqConnector.class);
 
     private final ConnectionFactory connectionFactory;
-    private final String queueName;
 
     private Connection connection;
     private Channel channel;
 
     @Inject
-    public SenderImpl(ConnectionFactory connectionFactory, String queueName) {
+    public RabbitMqConnector(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
-        this.queueName = queueName;
     }
 
     @Override
     public void initService() {
-        LOG.info("Initializing service...");
+        connect();
+    }
+
+    @Override
+    public void connect() {
+        LOG.info("Connecting to RabbitMQ...");
 
         try {
             connection = connectionFactory.newConnection();
@@ -46,22 +49,22 @@ public class SenderImpl implements Sender, Service {
             throw new IllegalStateException(e);
         }
 
-        LOG.info("Initialized service.");
+        LOG.info("Connected to RabbitMQ.");
     }
 
     @Override
-    public void send(Message message) {
-        try {
-            channel.basicPublish(StringUtils.EMPTY, queueName, null, message.getBytes());
-            LOG.info("Sent {}.", message.toString());
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-        }
+    public Channel getMediator() {
+        return channel;
     }
 
     @Override
     public void destroyService() {
-        LOG.info("Destroying service...");
+        disconnect();
+    }
+
+    @Override
+    public void disconnect() {
+        LOG.info("Disconnecting from RabbitMQ...");
 
         try {
             channel.close();
@@ -77,6 +80,6 @@ public class SenderImpl implements Sender, Service {
             return;
         }
 
-        LOG.info("Destroyed service.");
+        LOG.info("Disconnected from RabbitMQ.");
     }
 }

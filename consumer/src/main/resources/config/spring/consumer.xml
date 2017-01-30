@@ -3,15 +3,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
-    <bean id="connectionFactory" class="com.rabbitmq.client.ConnectionFactory">
-        <property name="host" value="localhost"/>
-        <property name="virtualHost" value="/home-system"/>
-        <property name="username" value="hs"/>
-        <property name="password" value="hs"/>
-    </bean>
+    <bean id="messageConsumer" class="cz.tomanjir.messaging.TestMessageConsumer"/>
 
-    <bean id="testSender" class="cz.tomanjir.messaging.SenderImpl">
-        <constructor-arg index="0" ref="connectionFactory"/>
+    <bean id="testReceiver" class="cz.tomanjir.messaging.rabbitmq.RabbitMqMessageReceiver">
+        <constructor-arg index="0" ref="connector"/>
         <constructor-arg index="1" value="hs-test"/>
+        <constructor-arg index="2" ref="messageConsumer"/>
     </bean>
 </beans>

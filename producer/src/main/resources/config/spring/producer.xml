@@ -3,5 +3,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
-    <bean id="animalRentalService" class="cz.tomanjir.common.service.AnimalRentalServiceImpl"/>
+    <bean id="testPublisher" class="cz.tomanjir.messaging.rabbitmq.RabbitMqMessagePublisher">
+        <constructor-arg index="0" ref="connector"/>
+        <constructor-arg index="1" value="hs-test"/>
+    </bean>
 </beans>
