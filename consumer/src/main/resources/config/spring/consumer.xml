@@ -3,11 +3,18 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
+    <bean id="queueReceiverProperties" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueueProperties">
+        <property name="queue" value="hs-durable-queue-test"/>
+        <property name="durable" value="true"/>
+        <property name="exclusive" value="false"/>
+        <property name="autoDelete" value="false"/>
+    </bean>
+
     <bean id="messageConsumer" class="cz.tomanjir.messaging.TestMessageConsumer"/>
 
-    <bean id="testReceiver" class="cz.tomanjir.messaging.rabbitmq.RabbitMqMessageReceiver">
+    <bean id="testReceiver" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueueReceiver">
         <constructor-arg index="0" ref="connector"/>
-        <constructor-arg index="1" value="hs-test"/>
+        <constructor-arg index="1" ref="queueReceiverProperties"/>
         <constructor-arg index="2" ref="messageConsumer"/>
     </bean>
 </beans>

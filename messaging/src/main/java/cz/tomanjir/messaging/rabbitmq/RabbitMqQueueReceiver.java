@@ -13,34 +13,35 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class RabbitMqMessageReceiver {
+public class RabbitMqQueueReceiver {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RabbitMqMessagePublisher.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RabbitMqQueueReceiver.class);
 
     @Inject
-    public RabbitMqMessageReceiver(RabbitMqConnector connector, String queueName, MessageConsumer messageHandler) {
+    public RabbitMqQueueReceiver(RabbitMqConnector connector, RabbitMqQueueProperties properties, MessageConsumer messageHandler) {
         Channel channel = connector.getMediator();
-        createQueueIfNeeded(channel, queueName);
-        registerConsumer(channel, queueName, messageHandler);
+        createQueueIfNeeded(channel, properties);
+        registerConsumer(channel, properties, messageHandler);
     }
 
-    private void createQueueIfNeeded(Channel channel, String queueName) {
-        LOG.info("Declaring RabitMQ queue {}...", queueName);
+    private void createQueueIfNeeded(Channel channel, RabbitMqQueueProperties properties) {
         try {
-            channel.queueDeclare(queueName, false, false, false, null);
+            channel.queueDeclare(properties.getQueue(), properties.isDurable(), properties.isExclusive(), properties.isAutoDelete(), properties.getArguments());
+            LOG.info("Declared RabitMQ queue {}.", properties);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
-            throw new IllegalStateException("Failed to declare RabitMQ queue " + queueName + "!", e);
+            throw new IllegalStateException("Failed to declare RabitMQ queue " + properties + "!", e);
         }
     }
 
-    private void registerConsumer(Channel channel, String queueName, MessageConsumer messageHandler) {
-        LOG.info("Registering RabitMQ message consumer on {} queue...", queueName);
+    private void registerConsumer(Channel channel, RabbitMqQueueProperties properties, MessageConsumer messageHandler) {
+        String queue = properties.getQueue();
         try {
-            channel.basicConsume(queueName, true, new RabbitMqMessageConsumer(channel, messageHandler));
+            channel.basicConsume(queue, true, new RabbitMqMessageConsumer(channel, messageHandler));
+            LOG.info("Registered RabitMQ message consumer for {} queue...", queue);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
-            throw new IllegalStateException("Failed to register RabitMQ message consumer on " + queueName + " queue!", e);
+            throw new IllegalStateException("Failed to register RabitMQ message consumer on " + queue + " queue!", e);
         }
     }
 

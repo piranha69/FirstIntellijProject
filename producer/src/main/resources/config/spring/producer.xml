@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
-    <bean id="testPublisher" class="cz.tomanjir.messaging.rabbitmq.RabbitMqMessagePublisher">
+    <bean id="queuePublisherProperties" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueuePublisherProperties">
+        <property name="queue" value="hs-durable-queue-test"/>
+        <property name="durable" value="true"/>
+        <property name="exclusive" value="false"/>
+        <property name="autoDelete" value="false"/>
+        <property name="publishProperties">
+            <util:constant static-field="com.rabbitmq.client.MessageProperties.PERSISTENT_TEXT_PLAIN"/>
+        </property>
+    </bean>
+
+    <bean id="testPublisher" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueuePublisher">
         <constructor-arg index="0" ref="connector"/>
-        <constructor-arg index="1" value="hs-test"/>
+        <constructor-arg index="1" ref="queuePublisherProperties"/>
     </bean>
 </beans>
