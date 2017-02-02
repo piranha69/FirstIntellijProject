@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class RabbitMqConnector implements Connector, Service {
+public class RabbitMqConnector implements Connector<Channel>, Service {
 
     private static final Logger LOG = LoggerFactory.getLogger(RabbitMqConnector.class);
 

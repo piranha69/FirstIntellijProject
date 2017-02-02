@@ -1,27 +1,53 @@
 package cz.tomanjir.messaging.rabbitmq;
 
 import com.google.common.base.MoreObjects;
-import com.rabbitmq.client.AMQP;
 
 import javax.inject.Inject;
 
 public class RabbitMqQueuePublisherProperties extends RabbitMqQueueProperties {
 
-    @Inject
-    private AMQP.BasicProperties publishProperties;
+    public enum RabbitMqDeliveryMode {
+        TRANSIENT(0),
+        PERSISTENT(2);
 
-    public AMQP.BasicProperties getPublishProperties() {
-        return publishProperties;
+        private final Integer value;
+
+        RabbitMqDeliveryMode(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
     }
 
-    public void setPublishProperties(AMQP.BasicProperties publishProperties) {
-        this.publishProperties = publishProperties;
+    @Inject
+    private String appId;
+
+    @Inject
+    private RabbitMqDeliveryMode deliveryMode;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public RabbitMqDeliveryMode getDeliveryMode() {
+        return deliveryMode;
+    }
+
+    public void setDeliveryMode(RabbitMqDeliveryMode deliveryMode) {
+        this.deliveryMode = deliveryMode;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("publishProperties", publishProperties)
+                .add("appId", appId)
+                .add("deliveryMode", deliveryMode)
                 .toString();
     }
 }

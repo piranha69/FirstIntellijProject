@@ -1,7 +1,7 @@
 package cz.tomanjir.messaging;
 
-public interface Connector {
+public interface Connector<T> {
     void connect();
     void disconnect();
-    Object getMediator();
+    T getMediator();
 }

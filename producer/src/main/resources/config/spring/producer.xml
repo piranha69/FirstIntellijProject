@@ -12,13 +12,17 @@
         <property name="durable" value="true"/>
         <property name="exclusive" value="false"/>
         <property name="autoDelete" value="false"/>
-        <property name="publishProperties">
-            <util:constant static-field="com.rabbitmq.client.MessageProperties.PERSISTENT_TEXT_PLAIN"/>
-        </property>
+        <property name="appId" value="home-system"/>
+        <property name="deliveryMode" value="PERSISTENT"/>
+    </bean>
+
+    <bean id="stringIdGenerator" class="cz.tomanjir.common.id.StringIdGenerator">
+        <constructor-arg index="0" value="home-system-"/>
     </bean>
 
     <bean id="testPublisher" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueuePublisher">
         <constructor-arg index="0" ref="connector"/>
         <constructor-arg index="1" ref="queuePublisherProperties"/>
+        <constructor-arg index="2" ref="stringIdGenerator"/>
     </bean>
 </beans>

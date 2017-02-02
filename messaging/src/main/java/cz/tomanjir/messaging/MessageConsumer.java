@@ -1,5 +1,5 @@
 package cz.tomanjir.messaging;
 
-public interface MessageConsumer {
-    void consume(Message message);
+public interface MessageConsumer<T extends Message> {
+    void consume(T message);
 }
