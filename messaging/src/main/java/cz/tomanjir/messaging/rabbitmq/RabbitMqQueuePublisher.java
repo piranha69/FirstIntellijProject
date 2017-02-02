@@ -65,7 +65,6 @@ public class RabbitMqQueuePublisher implements MessagePublisher<RabbitMqMessage>
         String id = idGenerator.nextId();
         return propertiesTemplate.builder()
                 .messageId(id)
-                .correlationId(id)
                 .timestamp(new Date())
                 .build();
     }
