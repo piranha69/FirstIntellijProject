@@ -31,5 +31,8 @@ public class MainController {
         LOG.info("Publishing {} message...", message);
         messagePublisher.publish(new RabbitMqMessage(message.getBytes()));
         LOG.info("Published {} message.", message);
+
+        messageField.clear();
+        messageField.requestFocus();
     }
 }

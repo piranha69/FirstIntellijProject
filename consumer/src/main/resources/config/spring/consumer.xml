@@ -10,11 +10,11 @@
         <property name="autoDelete" value="false"/>
     </bean>
 
-    <bean id="messageConsumer" class="cz.tomanjir.messaging.TestMessageConsumer"/>
+    <bean id="messageHandler" class="cz.tomanjir.consumer.messaging.handler.LogMessageHandler"/>
 
     <bean id="testReceiver" class="cz.tomanjir.messaging.rabbitmq.queue.RabbitMqQueueReceiver">
         <constructor-arg index="0" ref="connector"/>
         <constructor-arg index="1" ref="queueReceiverProperties"/>
-        <constructor-arg index="2" ref="messageConsumer"/>
+        <constructor-arg index="2" ref="messageHandler"/>
     </bean>
 </beans>

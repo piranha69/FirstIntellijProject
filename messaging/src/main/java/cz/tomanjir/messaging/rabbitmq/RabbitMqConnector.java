@@ -16,6 +16,8 @@ public class RabbitMqConnector implements Connector<Channel>, Service {
 
     private static final Logger LOG = LoggerFactory.getLogger(RabbitMqConnector.class);
 
+    private static final int INFINITE_TIMEOUT = -1;
+
     private final ConnectionFactory connectionFactory;
 
     private Connection connection;
@@ -67,14 +69,7 @@ public class RabbitMqConnector implements Connector<Channel>, Service {
         LOG.info("Disconnecting from RabbitMQ...");
 
         try {
-            channel.close();
-        } catch (IOException | TimeoutException e) {
-            LOG.error(e.getMessage(), e);
-            return;
-        }
-
-        try {
-            connection.close();
+            connection.close(INFINITE_TIMEOUT);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             return;

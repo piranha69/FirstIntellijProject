@@ -36,7 +36,7 @@ public class JavaFxGuiClient extends Application {
         Parent root = loader.load(getClass().getClassLoader().getResource("ui/javafx/Main.fxml"));
 
         primaryStage.setTitle("Home System");
-        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
         LOG.info("Started home-system GuiClient.");
