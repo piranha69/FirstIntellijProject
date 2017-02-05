@@ -4,6 +4,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
+import cz.tomanjir.messaging.Connector;
 import cz.tomanjir.messaging.Message;
 import cz.tomanjir.messaging.MessageConsumer;
 import cz.tomanjir.messaging.rabbitmq.RabbitMqConnector;
@@ -23,7 +24,7 @@ public class RabbitMqQueueReceiver {
     public RabbitMqQueueReceiver(RabbitMqConnector connector, RabbitMqProperties properties, MessageConsumer messageHandler) {
         Channel channel = connector.getMediator();
         createQueueIfNeeded(channel, properties);
-        registerConsumer(channel, properties, messageHandler);
+        registerConsumer(connector, channel, properties, messageHandler);
     }
 
     private void createQueueIfNeeded(Channel channel, RabbitMqProperties properties) {
@@ -36,10 +37,10 @@ public class RabbitMqQueueReceiver {
         }
     }
 
-    private void registerConsumer(Channel channel, RabbitMqProperties properties, MessageConsumer messageHandler) {
+    private void registerConsumer(Connector connector, Channel channel, RabbitMqProperties properties, MessageConsumer messageHandler) {
         String queue = properties.getQueue();
         try {
-            channel.basicConsume(queue, true, new RabbitMqMessageConsumer(channel, messageHandler));
+            channel.basicConsume(queue, true, new RabbitMqMessageConsumer(connector, channel, messageHandler));
             LOG.info("Registered RabitMQ message consumer for {} queue...", queue);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
@@ -49,18 +50,31 @@ public class RabbitMqQueueReceiver {
 
     private static class RabbitMqMessageConsumer extends DefaultConsumer {
 
+        private static final String KILL_SIGNAL = "KILL_SIGNAL";
+
+        private final Connector connector;
         private final MessageConsumer messageConsumer;
 
-        private RabbitMqMessageConsumer(Channel channel, MessageConsumer messageHandler) {
+        private RabbitMqMessageConsumer(Connector connector, Channel channel, MessageConsumer messageHandler) {
             super(channel);
+            this.connector = connector;
             this.messageConsumer = messageHandler;
         }
 
         @Override
         public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-            LOG.info("Recieved {}.", new String(body, StandardCharsets.UTF_8));
-            Message message = null; //TODO: Get message from byte[]
-            messageConsumer.consume(message);
+            LOG.info("Received {}.", new String(body, StandardCharsets.UTF_8));
+
+            String stringMessage = new String(body, StandardCharsets.UTF_8);
+            if (KILL_SIGNAL.equals(stringMessage)) {
+                LOG.warn("Received KILL_SIGNAL, stopping the consumer...");
+                connector.disconnect();
+                LOG.warn("Received KILL_SIGNAL, stopped consumer!");
+            } else {
+                //TODO: Get message from byte[]
+                Message message = null;
+                messageConsumer.consume(message);
+            }
         }
     }
 }

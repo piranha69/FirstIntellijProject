@@ -24,4 +24,8 @@
         <constructor-arg index="1" ref="queuePublisherProperties"/>
         <constructor-arg index="2" ref="stringIdGenerator"/>
     </bean>
+
+    <bean id="mainController" class="cz.tomanjir.guiclient.javafx.MainController">
+        <constructor-arg index="0" ref="queuePublisher"/>
+    </bean>
 </beans>
