@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 
 import javax.inject.Inject;
 
-public class RabbitMqQueuePublisherProperties extends RabbitMqQueueProperties {
+public class RabbitMqPublisherProperties extends RabbitMqProperties {
 
     public enum RabbitMqDeliveryMode {
         TRANSIENT(0),

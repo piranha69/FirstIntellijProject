@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
-    <bean id="queuePublisherProperties" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueuePublisherProperties">
+    <import resource="messaging.xml"/>
+
+    <bean id="queuePublisherProperties" class="cz.tomanjir.messaging.rabbitmq.RabbitMqPublisherProperties">
         <property name="queue" value="hs-durable-queue-test"/>
         <property name="durable" value="true"/>
         <property name="exclusive" value="false"/>
@@ -20,7 +19,7 @@
         <constructor-arg index="0" value="home-system-"/>
     </bean>
 
-    <bean id="testPublisher" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueuePublisher">
+    <bean id="queuePublisher" class="cz.tomanjir.messaging.rabbitmq.queue.RabbitMqQueuePublisher">
         <constructor-arg index="0" ref="connector"/>
         <constructor-arg index="1" ref="queuePublisherProperties"/>
         <constructor-arg index="2" ref="stringIdGenerator"/>

@@ -1,4 +1,4 @@
-package cz.tomanjir.messaging.rabbitmq;
+package cz.tomanjir.messaging.rabbitmq.queue;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -6,6 +6,8 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import cz.tomanjir.messaging.Message;
 import cz.tomanjir.messaging.MessageConsumer;
+import cz.tomanjir.messaging.rabbitmq.RabbitMqConnector;
+import cz.tomanjir.messaging.rabbitmq.RabbitMqProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +20,13 @@ public class RabbitMqQueueReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(RabbitMqQueueReceiver.class);
 
     @Inject
-    public RabbitMqQueueReceiver(RabbitMqConnector connector, RabbitMqQueueProperties properties, MessageConsumer messageHandler) {
+    public RabbitMqQueueReceiver(RabbitMqConnector connector, RabbitMqProperties properties, MessageConsumer messageHandler) {
         Channel channel = connector.getMediator();
         createQueueIfNeeded(channel, properties);
         registerConsumer(channel, properties, messageHandler);
     }
 
-    private void createQueueIfNeeded(Channel channel, RabbitMqQueueProperties properties) {
+    private void createQueueIfNeeded(Channel channel, RabbitMqProperties properties) {
         try {
             channel.queueDeclare(properties.getQueue(), properties.isDurable(), properties.isExclusive(), properties.isAutoDelete(), properties.getArguments());
             LOG.info("Declared RabitMQ queue {}.", properties);
@@ -34,7 +36,7 @@ public class RabbitMqQueueReceiver {
         }
     }
 
-    private void registerConsumer(Channel channel, RabbitMqQueueProperties properties, MessageConsumer messageHandler) {
+    private void registerConsumer(Channel channel, RabbitMqProperties properties, MessageConsumer messageHandler) {
         String queue = properties.getQueue();
         try {
             channel.basicConsume(queue, true, new RabbitMqMessageConsumer(channel, messageHandler));

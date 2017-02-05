@@ -3,7 +3,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-init-method="initService" default-destroy-method="destroyService">
 
-    <bean id="queueReceiverProperties" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueueProperties">
+    <bean id="queueReceiverProperties" class="cz.tomanjir.messaging.rabbitmq.RabbitMqProperties">
         <property name="queue" value="hs-durable-queue-test"/>
         <property name="durable" value="true"/>
         <property name="exclusive" value="false"/>
@@ -12,7 +12,7 @@
 
     <bean id="messageConsumer" class="cz.tomanjir.messaging.TestMessageConsumer"/>
 
-    <bean id="testReceiver" class="cz.tomanjir.messaging.rabbitmq.RabbitMqQueueReceiver">
+    <bean id="testReceiver" class="cz.tomanjir.messaging.rabbitmq.queue.RabbitMqQueueReceiver">
         <constructor-arg index="0" ref="connector"/>
         <constructor-arg index="1" ref="queueReceiverProperties"/>
         <constructor-arg index="2" ref="messageConsumer"/>

@@ -1,9 +1,13 @@
-package cz.tomanjir.messaging.rabbitmq;
+package cz.tomanjir.messaging.rabbitmq.queue;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import cz.tomanjir.common.id.IdGenerator;
 import cz.tomanjir.messaging.MessagePublisher;
+import cz.tomanjir.messaging.rabbitmq.RabbitMqConnector;
+import cz.tomanjir.messaging.rabbitmq.RabbitMqMessage;
+import cz.tomanjir.messaging.rabbitmq.RabbitMqProperties;
+import cz.tomanjir.messaging.rabbitmq.RabbitMqPublisherProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +27,7 @@ public class RabbitMqQueuePublisher implements MessagePublisher<RabbitMqMessage>
     private final IdGenerator<String> idGenerator;
 
     @Inject
-    public RabbitMqQueuePublisher(RabbitMqConnector connector, RabbitMqQueuePublisherProperties properties, IdGenerator<String> idGenerator) {
+    public RabbitMqQueuePublisher(RabbitMqConnector connector, RabbitMqPublisherProperties properties, IdGenerator<String> idGenerator) {
         this.channel = connector.getMediator();
         this.queue = properties.getQueue();
         this.propertiesTemplate = createPropertiesTemplate(properties);
@@ -32,14 +36,14 @@ public class RabbitMqQueuePublisher implements MessagePublisher<RabbitMqMessage>
         createQueueIfNeeded(properties);
     }
 
-    private AMQP.BasicProperties createPropertiesTemplate(RabbitMqQueuePublisherProperties properties) {
+    private AMQP.BasicProperties createPropertiesTemplate(RabbitMqPublisherProperties properties) {
         return new AMQP.BasicProperties.Builder()
                 .appId(properties.getAppId())
                 .deliveryMode(properties.getDeliveryMode().getValue())
                 .build();
     }
 
-    private void createQueueIfNeeded(RabbitMqQueueProperties properties) {
+    private void createQueueIfNeeded(RabbitMqProperties properties) {
         try {
             channel.queueDeclare(queue, properties.isDurable(), properties.isExclusive(), properties.isAutoDelete(), properties.getArguments());
             LOG.info("Declared RabitMQ queue {}.", properties);
@@ -52,6 +56,9 @@ public class RabbitMqQueuePublisher implements MessagePublisher<RabbitMqMessage>
     @Override
     public void publish(RabbitMqMessage message) {
         AMQP.BasicProperties props = createBasicProperties(message);
+
+        props.getExpiration();
+
         byte[] body = message.getBytes();
         try {
             channel.basicPublish(StringUtils.EMPTY, queue, props, body);

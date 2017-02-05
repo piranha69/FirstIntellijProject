@@ -13,7 +13,7 @@
         <module>common</module>
         <module>messaging</module>
         <module>messages</module>
-        <module>producer</module>
+        <module>gui-client</module>
         <module>consumer</module>
     </modules>
 

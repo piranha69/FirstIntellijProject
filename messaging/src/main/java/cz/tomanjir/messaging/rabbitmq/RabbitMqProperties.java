@@ -5,7 +5,7 @@ import com.google.common.base.MoreObjects;
 import javax.inject.Inject;
 import java.util.Map;
 
-public class RabbitMqQueueProperties {
+public class RabbitMqProperties {
 
     @Inject
     private String queue;
