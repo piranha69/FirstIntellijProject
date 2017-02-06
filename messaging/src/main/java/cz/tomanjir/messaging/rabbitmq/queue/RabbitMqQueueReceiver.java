@@ -4,6 +4,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
+import cz.tomanjir.messages.Messages;
 import cz.tomanjir.messaging.Message;
 import cz.tomanjir.messaging.MessageHandler;
 import cz.tomanjir.messaging.rabbitmq.RabbitMqConnector;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class RabbitMqQueueReceiver {
 
@@ -58,7 +58,9 @@ public class RabbitMqQueueReceiver {
 
         @Override
         public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-            LOG.info("Received message -> body={}.", new String(body, StandardCharsets.UTF_8));
+            Messages.TextMessage textMessage = Messages.TextMessage.parseFrom(body);
+
+            LOG.info("Received message -> body={}.", textMessage.getText());
 
             Message message = null; //TODO: Get message from byte[]
             messageHandler.handle(message);

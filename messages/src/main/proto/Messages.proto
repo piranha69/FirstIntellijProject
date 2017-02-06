@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package cz.tomanjir.messages;
+
+message TextMessage {
+    string text = 1;
+}

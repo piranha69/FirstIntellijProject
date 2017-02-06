@@ -1,5 +1,6 @@
 package cz.tomanjir.guiclient.javafx;
 
+import cz.tomanjir.messages.Messages;
 import cz.tomanjir.messaging.Message;
 import cz.tomanjir.messaging.MessagePublisher;
 import cz.tomanjir.messaging.rabbitmq.RabbitMqMessage;
@@ -28,8 +29,12 @@ public class MainController {
     public void handleSendButtonAction(ActionEvent actionEvent) {
         String message = messageField.getText();
 
+        Messages.TextMessage textMessage = Messages.TextMessage.newBuilder()
+                .setText(message)
+                .build();
+
         LOG.info("Publishing {} message...", message);
-        messagePublisher.publish(new RabbitMqMessage(message.getBytes()));
+        messagePublisher.publish(new RabbitMqMessage(textMessage.toByteArray()));
         LOG.info("Published {} message.", message);
 
         messageField.clear();
